@@ -25,12 +25,26 @@ class ListsTests {
     @Test
     def testSpan(): Unit = {
         assertEquals((List.nil, List(10, 20, 30, 40)), testList.span(_ > 15))
-        assertEquals((List(10, 20, 30, 40), List.nil), testList.span(_ < 15))
+        assertEquals((List(10), List(20, 30, 40)), testList.span(_ < 15))
     }
 
     @Test
     def testReduce(): Unit = {
         assertEquals(100, testList.reduce(_ + _))
-        assertThrows[UnsupportedOperationException](List.nil[Int].reduce(_ + _))
+        assertThrows(classOf[UnsupportedOperationException], () => List.nil[Int].reduce(_ + _))
+    }
+
+    @Test
+    def testTakeRight(): Unit = {
+        assertEquals(List(10, 20, 30, 40), testList.takeRight(4))
+        assertEquals(List(20, 30, 40), testList.takeRight(3))
+        assertEquals(List(30, 40), testList.takeRight(2))
+        assertEquals(List(40), testList.takeRight(1))
+        assertEquals(List.nil, testList.takeRight(0))
+    }
+
+    @Test
+    def testCollect(): Unit = {
+        assertEquals(List(9, 39), testList.collect { case x if x < 15 || x > 35 => x - 1})
     }
 }
