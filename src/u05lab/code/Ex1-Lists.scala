@@ -171,7 +171,7 @@ trait ListImplementation[A] extends List[A] {
             case Cons(_, t) if elems > 0 => _takeRight(t, elems - 1)
             case _ => Nil()
         }
-        def _length(list: List[A]): Int = foldLeft(0)((acc, _) => acc + 1)
+        def _length(list: List[A]): Int = list.foldLeft(0)((acc, _) => acc + 1)
         _takeRight(this, _length(this) - n)
     }
 
