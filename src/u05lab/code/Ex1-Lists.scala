@@ -1,4 +1,4 @@
-package u04lab.code
+package u05lab.code
 
 import scala.annotation.tailrec
 import scala.language.postfixOps // silence warnings
