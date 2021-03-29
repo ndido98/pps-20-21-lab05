@@ -136,6 +136,8 @@ trait ListImplementation[A] extends List[A] {
     override def reduce(op: (A, A) => A): A = ???
 
     override def takeRight(n: Int): List[A] = ???
+
+
 }
 
 // Factories
@@ -154,47 +156,4 @@ object List {
 
     def of[A](elem: A, n: Int): List[A] =
         if (n == 0) Nil() else elem :: of(elem, n - 1)
-}
-
-object ListsTest extends App {
-
-    import List._ // Working with the above lists
-    println(List(10, 20, 30, 40))
-    val l = 10 :: 20 :: 30 :: 40 :: Nil() // same as above
-    println(l.head) // 10
-    println(l.tail) // 20,30,40
-    println(l append l) // 10,20,30,40,10,20,30,40
-    println(l append l toSeq) // as a list: 10,20,30,40,10,20,30,40
-    println(l get 2) // 30
-    println(of("a", 10)) // a,a,a,..,a
-    println(l filter (_ <= 20) map ("a" + _)) // a10, a20
-
-    assert(List(1, 2, 3) == List(1, 2, 3))
-
-    println(scala.collection.immutable.List(10, 20, 30, 40).partition(_ > 15))
-    println(scala.collection.immutable.List(10, 20, 30, 40).span(_ > 15))
-
-    // Ex. 1: zipRight
-    println(l.zipRight.toSeq) // List((10,0), (20,1), (30,2), (40,3))
-
-    // Ex. 2: partition
-    println(l.partition(_ > 15)) // ( Cons(20,Cons(30,Cons(40,Nil()))), Cons(10,Nil()) )
-
-    // Ex. 3: span
-    println(l.span(_ > 15)) // ( Nil(), Cons(10,Cons(20,Cons(30,Cons(40,Nil())))) )
-    println(l.span(_ < 15)) // ( Cons(10,Nil()), Cons(20,Cons(30,Cons(40,Nil()))) )
-
-    // Ex. 4: reduce
-    println(l.reduce(_ + _)) // 100
-    try {
-        List[Int]().reduce(_ + _); assert(false)
-    } catch {
-        case _: UnsupportedOperationException =>
-    }
-
-    // Ex. 5: takeRight
-    println(l.takeRight(2)) // Cons(30,Cons(40,Nil()))
-
-    // Ex. 6: collect
-    // println(l.collect { case x if x<15 || x>35 => x-1 }) // Cons(9, Cons(39, Nil()))
 }
