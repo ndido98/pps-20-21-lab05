@@ -52,7 +52,7 @@ object ExamsManager {
         override def getBestResultFromStudent(student: String): Option[Int] = {
             getResultsMapFromStudent(student).values.collect {
                 case Succeeded(evaluation, _) => evaluation
-            }.toSeq.sorted.lastOption
+            }.maxByOption(identity)
         }
     }
 }
